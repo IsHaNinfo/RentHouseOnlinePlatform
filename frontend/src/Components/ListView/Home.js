@@ -12,12 +12,20 @@ import {
 import HouseIcon from "@mui/icons-material/House";
 import SearchIcon from "@mui/icons-material/Search";
 import LanguageIcon from "@mui/icons-material/Language";
+import Login from "../Userpages/Login";
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
+  const [loginOpen, setLoginOpen] = useState(false); // State to control Login component's open state
+
   const handleChange = (event) => {
     setInputValue(event.target.value);
   };
-
+  const handleLoginClick = () => {
+    setLoginOpen(true); // Open the Login component when the login button is clicked
+  };
+  const handleLoginClose = () => {
+    setLoginOpen(false); // Close the Login component
+  };
   return (
     <div>
       <AppBar
@@ -90,7 +98,9 @@ const Home = () => {
                 mr: "35px", // Added border style
               }}
             >
-              <Button sx={{ color: "black" }}>Log in</Button>
+              <Button sx={{ color: "black" }} onClick={handleLoginClick}>
+                Log in
+              </Button>
             </Grid>
             <Grid
               sx={{
@@ -110,6 +120,9 @@ const Home = () => {
           </Grid>
         </Toolbar>
       </AppBar>
+      {loginOpen && (
+        <Login handleClose={handleLoginClose} handleOpen={handleLoginClick} />
+      )}
     </div>
   );
 };
