@@ -51,7 +51,7 @@ const Home = () => {
               All Ads
             </Typography>
             <TextField
-              id="outlined-basic"
+              id="outlined-size-small"
               variant="outlined"
               value={inputValue}
               onChange={handleChange}
@@ -86,6 +86,7 @@ const Home = () => {
               </Button>
             </Grid>
             <Grid
+              onClick={handleLoginClick}
               sx={{
                 color: "green",
                 fontSize: "45px",
@@ -98,9 +99,7 @@ const Home = () => {
                 mr: "35px", // Added border style
               }}
             >
-              <Button sx={{ color: "black" }} onClick={handleLoginClick}>
-                Log in
-              </Button>
+              <Button sx={{ color: "black" }}>Log in</Button>
             </Grid>
             <Grid
               sx={{
