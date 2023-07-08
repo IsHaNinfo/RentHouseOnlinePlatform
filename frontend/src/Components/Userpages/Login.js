@@ -15,9 +15,19 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { NavLink } from "react-router-dom";
-
+import { Typography } from "@mui/material";
+import SignUp from "./SignUp";
 function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
+  const [signUpOpen, setSignUpOpen] = useState(false); // State to control Login component's open state
+  const handleSignUpClick = () => {
+    setSignUpOpen(true);
+  };
+  const handleSignUpClose = () => {
+    setSignUpOpen(false);
+    // Close the Login component
+    // Close the Login component
+  };
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
@@ -29,7 +39,8 @@ function Login(props) {
         sx={{
           "& .MuiDialog-paper": {
             width: "716px", // Set the desired width
-            maxHeight: "550px", // Set the desired max height
+            maxHeight: "550px",
+            borderRadius: "15px", // Set the desired max height
           },
         }}
       >
@@ -124,8 +135,8 @@ function Login(props) {
             Log in
           </Button>
         </DialogActions>
-        {/* <div
-          sx={{
+        <div
+          style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -134,21 +145,25 @@ function Login(props) {
           }}
         >
           <Typography>Don't have an Account</Typography>
-          <NavLink
-            to="/passwordChange"
-            sx={{ textDecoration: "none", marginLeft: "10px" }}
-          >
+          <NavLink sx={{ textDecoration: "none", marginLeft: "10px" }}>
             <Button
               sx={{
                 textTransform: "none", // Set text transform to none
                 color: "#14CE9E",
               }}
+              onClick={handleSignUpClick}
             >
               Sign Up
             </Button>
           </NavLink>
-        </div> */}
+        </div>
       </Dialog>
+      {signUpOpen && (
+        <SignUp
+          handleSignClose={handleSignUpClose}
+          handleSignOpen={handleSignUpClick}
+        />
+      )}
     </div>
   );
 }
