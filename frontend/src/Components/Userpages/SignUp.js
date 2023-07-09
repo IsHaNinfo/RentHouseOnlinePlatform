@@ -20,6 +20,7 @@ import Login from "./Login";
 import LinearProgress from "@mui/material/LinearProgress";
 import axios from "axios";
 import { Alert, AlertTitle } from "@mui/material";
+import Swal from "sweetalert2";
 
 const SignUp = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -77,11 +78,18 @@ const SignUp = (props) => {
           password,
           _id,
         });
-        <Alert severity="success">
-          <AlertTitle>Success</AlertTitle>
-          <strong>Succfuly login —</strong>
-        </Alert>;
+
         history("/");
+        props.handleClose();
+        if (response.status === 200) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Success fully login",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       } else {
         // Handle invalid response
         console.log("Invalid response:", response);
