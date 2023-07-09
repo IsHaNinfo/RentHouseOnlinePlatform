@@ -14,11 +14,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import Login from "./Login";
 import LinearProgress from "@mui/material/LinearProgress";
 import axios from "axios";
+import { Alert, AlertTitle } from "@mui/material";
 
 const SignUp = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +30,7 @@ const SignUp = (props) => {
   const [contactNumber, setContactNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const history = useNavigate();
 
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -75,6 +77,11 @@ const SignUp = (props) => {
           password,
           _id,
         });
+        <Alert severity="success">
+          <AlertTitle>Success</AlertTitle>
+          <strong>Succfuly login —</strong>
+        </Alert>;
+        history("/");
       } else {
         // Handle invalid response
         console.log("Invalid response:", response);

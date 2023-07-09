@@ -14,12 +14,20 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import SignUp from "./SignUp";
+import axios from "axios";
+import { Alert, AlertTitle } from "@mui/material";
+import Swal from "sweetalert2";
+
 function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const history = useNavigate();
 
   // State to control Login component's open state
   const handleSignUpClick = () => {
@@ -31,10 +39,51 @@ function Login(props) {
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
+  const handleLogin = async () => {
+    try {
+      const userData = {
+        email,
+        password,
+        // Add the user role if needed
+      };
+
+      const response = await axios.post(
+        "http://localhost:4000/api/user/login",
+        userData
+      );
+
+      if (response && response.data) {
+        // Handle successful signup
+        const { email, token } = response.data;
+        console.log({
+          email,
+          token,
+        });
+        history("/");
+        props.handleClose();
+        if (response.status === 200) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Success fully login",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      } else {
+        // Handle invalid response
+        console.log("Invalid response:", response);
+      }
+    } catch (error) {
+      // Handle signup error
+      console.log("login error:", error.response.data);
+    }
+  };
   return (
     <div>
       <Dialog
-        open={props.handleOpen}
+        open={props.handleOpen} // Update prop name from props.handleOpen to props.open
         onClose={props.handleClose}
         sx={{
           "& .MuiDialog-paper": {
@@ -65,6 +114,8 @@ function Login(props) {
                   mt: "15px",
                   mb: "15px",
                 }}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <FormLabel sx={{ fontWeight: "bold" }}>Password</FormLabel>
@@ -78,6 +129,8 @@ function Login(props) {
                   width: "470px",
                   mt: "15px", // Set the desired width
                 }}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -131,6 +184,7 @@ function Login(props) {
               mt: "25px",
               mb: "25px", // Set text to lowercase
             }}
+            onClick={handleLogin}
           >
             Log in
           </Button>
@@ -158,6 +212,7 @@ function Login(props) {
           </NavLink>
         </div>
       </Dialog>
+
       {signUpOpen && (
         <SignUp
           handleSignClose={handleSignUpClose}
