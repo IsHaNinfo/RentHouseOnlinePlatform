@@ -6,25 +6,16 @@ app.use(express.urlencoded({ extended: false }));
 const createToken = require("../utils/createToken");
 
 const signup = async (req, res) => {
-  const { fullName, email, contactNumber, password, userRole } = req.body;
+  const { Name, email, contactNumber, password } = req.body;
   try {
-    const user = await User.signup(
-      fullName,
-      email,
-      password,
-      contactNumber,
-      userRole
-    );
+    const user = await User.signup(Name, email, password, contactNumber);
     const token = createToken(user._id);
 
     res.status(200).json({
-      fullName,
+      Name,
       email,
       contactNumber,
       password,
-      contactNumber,
-      userRole,
-      token,
       _id: user._id,
     });
   } catch (error) {
@@ -37,7 +28,7 @@ const login = async (req, res) => {
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
-    res.status(200).json({ fullName: user.fullName, email, token });
+    res.status(200).json({ Name: user.Name, email, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

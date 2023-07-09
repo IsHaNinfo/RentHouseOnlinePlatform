@@ -19,14 +19,14 @@ import { Typography } from "@mui/material";
 import SignUp from "./SignUp";
 function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
-  const [signUpOpen, setSignUpOpen] = useState(false); // State to control Login component's open state
+  const [signUpOpen, setSignUpOpen] = useState(false);
+
+  // State to control Login component's open state
   const handleSignUpClick = () => {
     setSignUpOpen(true);
   };
   const handleSignUpClose = () => {
     setSignUpOpen(false);
-    // Close the Login component
-    // Close the Login component
   };
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);

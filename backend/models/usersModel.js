@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
-const { Role } = require("../utils/Constant");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  fullName: {
+  Name: {
     type: String,
     required: true,
   },
@@ -21,19 +20,14 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  userRole: {
-    type: String,
-    enum: [Role.HouseOwner, Role.customer],
-  },
 });
 userSchema.statics.signup = async function (
-  fullName,
+  Name,
   email,
   password,
-  contactNumber,
-  userRole
+  contactNumber
 ) {
-  if (!fullName || !email || !password || !userRole || !contactNumber) {
+  if (!Name || !email || !password || !contactNumber) {
     throw Error("All fields must be provided");
   }
   if (!validator.isEmail(email)) {
@@ -42,7 +36,7 @@ userSchema.statics.signup = async function (
   if (!validator.isStrongPassword(password)) {
     throw Error("Password not strong enough");
   }
-  const fullNamecheck = await this.findOne({ fullName });
+  const fullNamecheck = await this.findOne({ Name });
 
   if (fullNamecheck) {
     throw Error("fullName already in use");
@@ -56,11 +50,10 @@ userSchema.statics.signup = async function (
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
   const user = await this.create({
-    fullName,
+    Name,
     email,
     password: hash,
     contactNumber,
-    userRole,
   });
 
   return user;

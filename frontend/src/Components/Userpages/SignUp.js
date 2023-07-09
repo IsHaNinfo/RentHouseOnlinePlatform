@@ -16,16 +16,15 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { NavLink } from "react-router-dom";
 import { Typography } from "@mui/material";
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
 import Login from "./Login";
 import LinearProgress from "@mui/material/LinearProgress";
+import axios from "axios";
 
 const SignUp = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false); // State to control Login component's open state
   const [activeStep, setActiveStep] = useState(1); // State to track the active step
-  const [name, setName] = useState("");
+  const [Name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -51,8 +50,39 @@ const SignUp = (props) => {
     setActiveStep(activeStep - 1);
   };
 
-  const handleSignUp = () => {
-    // Handle sign up logic here
+  const handleSignUp = async () => {
+    try {
+      const userData = {
+        Name,
+        email,
+        contactNumber,
+        password,
+        // Add the user role if needed
+      };
+
+      const response = await axios.post(
+        "http://localhost:4000/api/user/signup",
+        userData
+      );
+
+      if (response && response.data) {
+        // Handle successful signup
+        const { Name, email, contactNumber, password, _id } = response.data;
+        console.log({
+          Name,
+          email,
+          contactNumber,
+          password,
+          _id,
+        });
+      } else {
+        // Handle invalid response
+        console.log("Invalid response:", response);
+      }
+    } catch (error) {
+      // Handle signup error
+      console.log("Signup error:", error.response.data);
+    }
   };
 
   return (
@@ -105,7 +135,7 @@ const SignUp = (props) => {
                     mt: "15px",
                     mb: "15px",
                   }}
-                  value={name}
+                  value={Name}
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
