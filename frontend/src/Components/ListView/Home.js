@@ -13,6 +13,7 @@ import HouseIcon from "@mui/icons-material/House";
 import SearchIcon from "@mui/icons-material/Search";
 import LanguageIcon from "@mui/icons-material/Language";
 import Login from "../Userpages/Login";
+import Contact from "./Contact";
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
   const [loginOpen, setLoginOpen] = useState(false); // State to control Login component's open state
@@ -123,6 +124,7 @@ const Home = () => {
       {loginOpen && (
         <Login handleClose={handleLoginClose} handleOpen={handleLoginClick} />
       )}
+      <Contact />
     </div>
   );
 };
