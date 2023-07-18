@@ -26,6 +26,7 @@ const Home = () => {
   const handleLoginClose = () => {
     setLoginOpen(false); // Close the Login component
   };
+
   return (
     <div>
       <AppBar
