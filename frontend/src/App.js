@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./Components/ListView/Home";
+import Home from "./Pages/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {

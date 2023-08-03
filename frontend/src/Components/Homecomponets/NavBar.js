@@ -63,6 +63,8 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   "& .MuiAppBar-root": {
     boxShadow: "none",
   },
+  height: "80px",
+  padding: "10px",
 }));
 
 const StyledIcon = styled(SearchIcon)(({ theme }) => ({
@@ -112,7 +114,7 @@ const StyledAdd = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function SearchBar() {
+export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
