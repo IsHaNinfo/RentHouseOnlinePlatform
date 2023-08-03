@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -18,6 +18,9 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import HouseIcon from "@mui/icons-material/House";
 import LanguageIcon from "@mui/icons-material/Language";
 import Button from "@mui/material/Button";
+import Login from "./../Userpages/Login";
+import LoginIcon from "@mui/icons-material/Login";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -74,6 +77,13 @@ const StyledHouseIcon = styled(HouseIcon)(({ theme }) => ({
   color: "#14ce9e",
 }));
 
+const StyledLoginIcon = styled(LoginIcon)(({ theme }) => ({
+  color: "#14ce9e",
+}));
+
+const StyledAddIcon = styled(AddBusinessIcon)(({ theme }) => ({
+  color: "#14ce9e",
+}));
 const StyledLanguageIcon = styled(LanguageIcon)(({ theme }) => ({
   color: "#14ce9e",
   fontSize: "40px",
@@ -117,7 +127,14 @@ const StyledAdd = styled(Button)(({ theme }) => ({
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [loginOpen, setLoginOpen] = useState(false);
 
+  const handleLoginClick = () => {
+    setLoginOpen(true);
+  };
+  const handleLoginClose = () => {
+    setLoginOpen(false);
+  };
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -179,15 +196,15 @@ export default function NavBar() {
     >
       <MenuItem>
         <IconButton size="large" color="inherit">
-          <MailIcon />
+          <StyledLoginIcon />
         </IconButton>
         <p>Login</p>
       </MenuItem>
       <MenuItem>
         <IconButton size="large" color="inherit">
-          <NotificationsIcon />
+          <StyledAddIcon />
         </IconButton>
-        <p>SignUp</p>
+        <p>Add Post</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -237,7 +254,7 @@ export default function NavBar() {
             <Button>
               <StyledLanguageIcon />
             </Button>
-            <StyledLogin>Login</StyledLogin>
+            <StyledLogin onClick={handleLoginClick}>Login</StyledLogin>
             <StyledAdd>Add Post</StyledAdd>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -255,6 +272,9 @@ export default function NavBar() {
       </StyledAppBar>
       {renderMobileMenu}
       {renderMenu}
+      {loginOpen && (
+        <Login handleClose={handleLoginClose} handleOpen={handleLoginClick} />
+      )}
     </Box>
   );
 }
