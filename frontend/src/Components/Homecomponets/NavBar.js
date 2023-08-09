@@ -194,7 +194,7 @@ export default function NavBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem onClick={handleLoginClick}>
         <IconButton size="large" color="inherit">
           <StyledLoginIcon />
         </IconButton>

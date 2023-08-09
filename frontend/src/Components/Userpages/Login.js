@@ -20,6 +20,7 @@ import SignUp from "./SignUp";
 import axios from "axios";
 import { Alert, AlertTitle } from "@mui/material";
 import Swal from "sweetalert2";
+import { styled, alpha } from "@mui/material/styles";
 
 function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,6 +40,46 @@ function Login(props) {
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
+  const StyledInput = styled(TextField)(({ theme }) => ({
+    width: "100%", // Take up full width on all screen sizes
+    maxWidth: "470px", // Limit maximum width
+    marginTop: "15px",
+    marginBottom: "15px",
+    [theme.breakpoints.down("sm")]: {
+      // Apply styles for screens smaller than 'sm' (600px)
+      maxWidth: "100%",
+      marginTop: "15px",
+      // Take up full width on smaller screens
+    },
+  }));
+  const StyledBox = styled(Box)(({ theme }) => ({
+    justifyContent: "center",
+    [theme.breakpoints.down("sm")]: {
+      // Apply styles for screens smaller than 'sm' (600px)
+      justifyContent: "center",
+    },
+  }));
+  const StyledButton = styled(Button)(({ theme }) => ({
+    color: "white",
+    backgroundColor: "#14CE9E",
+    fontSize: "25px",
+    border: "1px solid #14CE9E",
+    width: "80%", // Take up full width on all screen sizes
+    height: "51px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textTransform: "capitalize",
+    mt: "25px",
+    mb: "25px",
+    [theme.breakpoints.down("sm")]: {
+      // Apply styles for screens smaller than 'sm' (600px)
+      marginRight: 0,
+      maxWidth: "100%", // Take up full width on smaller screens
+      // Remove right margin on smaller screens
+    },
+  }));
 
   const handleLogin = async () => {
     try {
@@ -80,6 +121,7 @@ function Login(props) {
       console.log("login error:", error.response.data);
     }
   };
+
   return (
     <div>
       <Dialog
@@ -100,27 +142,22 @@ function Login(props) {
           WelCome Back !
         </DialogTitle>
         <DialogContent sx={{ ml: "35px" }}>
-          <Box component="form" noValidate autoComplete="off">
+          <StyledBox component="form" noValidate autoComplete="off">
             {" "}
             <FormLabel sx={{ fontWeight: "bold" }}>Email</FormLabel>
             <div>
-              <TextField
+              <StyledInput
                 label="Enter your email"
                 id="outlined-size-small"
                 size="small"
                 type="email"
-                sx={{
-                  width: "470px",
-                  mt: "15px",
-                  mb: "15px",
-                }}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <FormLabel sx={{ fontWeight: "bold" }}>Password</FormLabel>
             <div>
-              <TextField
+              <StyledInput
                 label="Enter your password"
                 id="outlined-size-small"
                 size="small"
@@ -142,7 +179,7 @@ function Login(props) {
                 }}
               />
             </div>
-          </Box>
+          </StyledBox>
           <div sx={{ display: "flex", alignItems: "center" }}>
             <FormControlLabel
               control={<Checkbox sx={{ color: "#14CE9E" }} />}
@@ -168,26 +205,11 @@ function Login(props) {
         </DialogContent>
         <DialogActions>
           {" "}
-          <Button
-            sx={{
-              color: "white",
-              backgroundColor: "#14CE9E",
-              fontSize: "25px",
-              border: "1px solid #14CE9E",
-              width: "424px",
-              height: "51px",
-              display: "flex",
-              alignItems: "center", // Center align the text vertically
-              justifyContent: "center",
-              mr: "85px", // Added border style
-              textTransform: "capitalize",
-              mt: "25px",
-              mb: "25px", // Set text to lowercase
-            }}
-            onClick={handleLogin}
+          <Box
+            sx={{ width: "100%", display: "flex", justifyContent: "center" }}
           >
-            Log in
-          </Button>
+            <StyledButton onClick={handleLogin}>Log in</StyledButton>
+          </Box>{" "}
         </DialogActions>
         <div
           style={{
