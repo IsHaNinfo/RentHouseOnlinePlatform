@@ -9,7 +9,7 @@ const signup = async (req, res) => {
   const { Name, email, contactNumber, password } = req.body;
   try {
     const user = await User.signup(Name, email, password, contactNumber);
-    const token = createToken(user._id);
+  
 
     res.status(200).json({
       Name,
@@ -33,7 +33,26 @@ const login = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+const getUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Use the correct field name for the user's ID from your database schema
+    const user = await User.findOne({ _id: id });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 module.exports = {
   signup,
   login,
+  getUser
 };
